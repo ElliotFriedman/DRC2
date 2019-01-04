@@ -8,7 +8,7 @@
 
 */
 
-Function constructor() Uint64
+Function Initialize() Uint64
 1 IF LOAD("init") == 0 THEN GOTO 3
 2 RETURN 1
 3 STORE("init", 1) //you can only call the constructor once
@@ -16,6 +16,7 @@ Function constructor() Uint64
 5 STORE(0, LOAD("owner")) //owner owns asset 0
 6 STORE("ASSET_NUM", 0) //store the current asset that is available
 7 RETURN 0
+End Function
 
 Function createAsset() Uint64
 40 dim currAsset as Uint64 //create currasset in Memory
@@ -23,12 +24,14 @@ Function createAsset() Uint64
 60 STORE("ASSET_NUM", currAsset) //increment the counter globally so that two people don't own the same asset which would override first owner
 65 STORE(currAsset, ADDRESS_RAW(SIGNER())) //map the number to the address of who owns it
 70 RETURN 0
+End Function
 
 Function withdrawAll(amt Uint64) Uint64
 10 IF LOAD("owner") ==  ADDRESS_RAW(SIGNER()) THEN GOTO 12 //make sure that the owner is the person calling
 11 RETURN 1
 12 SEND_DERO_TO_ADDRESS(SIGNER(), amt) //send money to the owner, probably should not be in raw format and in regular hex encoded output like we are using
 13 RETURN 0
+End Function
 
 Function sendAsset(to String, assetID Uint64) Uint64
 14 IF LOAD(assetID) ==  ADDRESS_RAW(SIGNER()) THEN GOTO 16 //will panic if assetID does not exist so we don't need to worry about checking this
@@ -38,4 +41,5 @@ Function sendAsset(to String, assetID Uint64) Uint64
 18 STORE(assetID,  ADDRESS_RAW(to)) //give the asset to the person the sender requested
 19 printf
 20 RETURN 0
+End Function
 
