@@ -39,7 +39,6 @@ Function sendAsset(to String, assetID Uint64) Uint64
 16 IF IS_ADDRESS_VALID(to) == 1 THEN GOTO 18 //don't want to send asset to a non-existent person or a mis-typed address so check validity
 17 RETURN 1
 18 STORE(assetID,  ADDRESS_RAW(to)) //give the asset to the person the sender requested
-19 printf
-20 RETURN 0
+19 RETURN 0
 End Function
 
