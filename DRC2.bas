@@ -42,3 +42,7 @@ Function sendAsset(to String, assetID Uint64) Uint64
 19 RETURN 0
 End Function
 
+Function getAddress() String
+101 RETURN SCID()
+End Function
+
